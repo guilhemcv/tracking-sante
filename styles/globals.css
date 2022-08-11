@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.circle {
+  display: flex;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.text {
+  margin: auto;
+  font-size: 25px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.underweight {
+  border: 10px solid rgba(6, 178, 236, 1);
+}
+
+.normal {
+  border: 10px solid #79b92a;
+}
+
+.overweight {
+  border: 10px solid #f59f01;
+}
+
+.obese {
+  border: 10px solid #e40515;
+}

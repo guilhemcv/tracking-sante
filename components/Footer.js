@@ -5,7 +5,7 @@ import github from '../public/assets/images/github.png';
 
 export const Footer = () => {
   return (
-    <div className="absolute bottom-0 w-full bg-black">
+    <div className="fixed bottom-0 w-full bg-black">
       <footer className="flex items-center justify-between p-4 text-center text-white bg-nav">
         <div className="flex justify-center font-Prompt">
           <p className='text-xs md:ml-10 md:text-sm font-prompt'>Copyright - Guilhem Seyvet 2022</p>

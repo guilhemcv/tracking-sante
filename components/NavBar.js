@@ -21,6 +21,12 @@ const NavAccueil = () => {
         >
           <a>Mon profil</a>
         </Link>{' '}
+        <Link
+          className="flex items-center h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
+          href="/ajouter"
+        >
+          <a>Ajouter donnée</a>
+        </Link>{' '}
       </div>
     </div>
   );
