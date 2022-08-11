@@ -5,6 +5,8 @@ import NavAccueil from '../components/NavBar';
 import { Footer } from '../components/Footer';
 import { Landing } from '../components/Landing';
 import NavLanding from '../components/NavBarAccueil';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
   const [session, setSession] = useState(null);
@@ -18,13 +20,26 @@ export default function Home() {
     });
   }, []);
 
+  const displayToast = () => {
+    toast.success('📬 Le lien a été envoyé ! consultez votre boite mail.', {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
   if (session) {
     router.push('/dashboard');
   }
   return (
     <div className="h-screen bg-center bg-[url('../public/assets/images/running-woman.jpg')]">
       <NavLanding />
-      <Landing />
+      <Landing displayToast={displayToast} />
+      <ToastContainer />
       <Footer />
     </div>
   );
