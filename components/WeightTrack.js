@@ -44,7 +44,7 @@ const WeightTrack = ({weight}) => {
     labels,
     datasets: [
       {
-        label: 'Évolution du poids',
+        label: 'Votre évolution de poids',
         data: donnees,
         fill: true,
         borderColor: 'rgb(75, 192, 192)',
@@ -55,7 +55,7 @@ const WeightTrack = ({weight}) => {
   };
 
   return (
-    <div className='lg:w-1/2 w-9/12'>
+    <div className='w-2/3'>
       <Line options={options} data={data} />
     </div>
   );

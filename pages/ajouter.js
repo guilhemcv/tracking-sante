@@ -10,21 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function Ajouter({ session }) {
   const [loading, setLoading] = useState(true);
-  const [height, setHeight] = useState(null);
   const [weight, setWeight] = useState([]);
-  const [dateToSave, setDateToSave] = useState(null);
-  const [newWeight, setNewWeight] = useState(null);
-  const [updated, setUpdated] = useState(false);
-  const [weightSelected, setWeightSelected] = useState(false);
 
-  //when the button is clicked, the date and the weight are added to the weight array
-  function addWeight() {
-    setWeight([
-      ...weight,
-      { date: dateToSave.split('-').reverse().join('/'), poids: newWeight },
-    ]);
-  }
-  console.log(weight);
 
   useEffect(() => {
     getProfile();

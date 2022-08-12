@@ -3,14 +3,16 @@ import NavAccueil from '../components/NavBar';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../utils/supabase';
-import WeightTrack from '../components/WeightTrack';
-import ImcChart from '../components/ImcChart';
 import { TestCircle } from '../components/testCircle';
 import Image from 'next/image';
-import add from '../public/assets/images/add.png';
+import WaterWave from '../components/WaterWave';
+import poids from '../public/assets/images/weight.png';
+import go from '../public/assets/images/logout.png';
+import hello from '../public/assets/images/hello-world.png';
 
 export default function Dashboard() {
   const [session, setSession] = useState(null);
+  const [waterToDrink, setWaterToDrink] = useState(null);
   const [weight, setWeight] = useState([]);
   const [height, setHeight] = useState(null);
   const [water, setWater] = useState([]);
@@ -43,6 +45,15 @@ export default function Dashboard() {
     getProfile();
   }, [session]);
 
+  useEffect(() => {
+    if (weight.length > 0) {
+      const lastWeight = parseInt(weight[weight.length - 1].poids);
+      setWaterToDrink((lastWeight - 20) * 15 + 1500);
+    }
+  }, [weight]);
+
+  console.log(waterToDrink);
+
   async function getProfile() {
     try {
       setLoading(true);
@@ -59,7 +70,9 @@ export default function Dashboard() {
       }
 
       if (data) {
-        setWeight(data.weight.sort((a, b) => new Date(a.date) - new Date(b.date)));
+        setWeight(
+          data.weight.sort((a, b) => new Date(a.date) - new Date(b.date))
+        );
         setWater(data.water);
         setHeight(data.height);
         setLastName(data.lastname);
@@ -72,10 +85,65 @@ export default function Dashboard() {
     }
   }
 
-  return session ? (
-    <div>
-      <NavAccueil />
-      {lastName === '' && firstName === '' ? (
+  return (
+    session && (
+      <div>
+        <NavAccueil />
+
+        <div className="grid lg:grid-cols-3  xl:grid-cols-4 md:grid-cols-2 mt-10 ">
+          <div className=" p-4 w-80 mx-auto">
+            <div className="p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
+              <h2 className="text-2xl font-bold text-gray-800">
+                Salut {lastName} !
+              </h2>
+              <Image src={hello} alt="hello" width={100} height={100} />
+              <div className="flex flex-col items-center">
+                <h2 className="text-xl font-bold">{dateString}</h2>
+                <h2 className="text-xl font-bold">{timeString}</h2>
+              </div>
+            </div>
+          </div>
+          <div className="p-4 w-80 mx-auto">
+            <div className="p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
+              <Image src={poids} alt="poids" width={100} height={100} />
+              <h2 className="text-2xl font-bold text-gray-800">Suivi poids</h2>
+              <div className="flex justify-end w-full hover:animate-bounce cursor-pointer">
+                <button
+                  type="button"
+                  onClick={() => router.push('/suivi-poids')}
+                >
+                  <Image src={go} alt="go" width={20} height={20} />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className=" p-4 w-80 mx-auto">
+            <div className="p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
+              <TestCircle
+                height={height !== null && height}
+                weight={weight.length > 0 && weight[weight.length - 1]}
+              />
+            </div>
+          </div>
+          <div className=" p-4 w-80 mx-auto">
+            <div className="p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
+              <h2 className="text-2xl font-bold text-gray-800 text-center">
+                Conso d&apos;eau <br />
+                journalière
+              </h2>
+              <WaterWave water={water} waterToDrink={waterToDrink} />
+              <div className="flex justify-end w-full hover:animate-bounce cursor-pointer">
+                <button
+                  type="button"
+                  onClick={() => router.push('/suivi-eau')}
+                >
+                  <Image src={go} alt="go" width={20} height={20} />
+                </button>
+                </div>
+            </div>
+          </div>
+
+          {/* {lastName === '' && firstName === '' ? (
         <h1>
           Si vous venez de vous inscrire, compléter vos données sur
           l&apos;onglet profil
@@ -101,6 +169,7 @@ export default function Dashboard() {
           weight={weight.length > 0 && weight[weight.length - 1]}
         />
       </div>
+      <WaterWave />
       <Footer />
     </div>
   ) : (
@@ -113,6 +182,10 @@ export default function Dashboard() {
         Retour
       </button>
       <Footer />
-    </div>
+     */}
+        </div>
+        <Footer />
+      </div>
+    )
   );
 }
