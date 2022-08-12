@@ -17,15 +17,21 @@ const NavAccueil = () => {
         </Link>
         <Link
           className="flex items-center h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
-          href="/profil"
+          href="/suivi-poids"
         >
-          <a>Mon profil</a>
+          <a>Suivi poids</a>
         </Link>{' '}
         <Link
           className="flex items-center h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
-          href="/ajouter"
+          href="/suivi-eau"
         >
-          <a>Ajouter donnée</a>
+          <a>Suivi eau</a>
+        </Link>{' '}
+        <Link
+          className="flex items-center h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
+          href="/profil"
+        >
+          <a>Mon profil</a>
         </Link>{' '}
       </div>
     </div>

@@ -19,6 +19,7 @@ export default function Dashboard() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [loading, setLoading] = useState(false);
+  const [dernierePesee, setDernierePesee] = useState(null);
   const router = useRouter();
 
   const newDate = new Date();
@@ -48,6 +49,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (weight.length > 0) {
       const lastWeight = parseInt(weight[weight.length - 1].poids);
+      setDernierePesee(lastWeight);
       setWaterToDrink((lastWeight - 20) * 15 + 1500);
     }
   }, [weight]);
@@ -90,8 +92,8 @@ export default function Dashboard() {
       <div>
         <NavAccueil />
 
-        <div className="grid lg:grid-cols-3  xl:grid-cols-4 md:grid-cols-2 mt-10 ">
-          <div className=" p-4 w-80 mx-auto">
+        <div className="grid lg:grid-cols-3  xl:grid-cols-4 md:grid-cols-2 mt-10 md:mb-40 gap-y-5 ">
+          <div onClick={() => router.push('/profil')} className=" p-4 w-80 mx-auto hover:scale-110 ease-in duration-300 cursor-pointer">
             <div className="p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
               <h2 className="text-2xl font-bold text-gray-800">
                 Salut {lastName} !
@@ -103,18 +105,16 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-          <div className="p-4 w-80 mx-auto">
-            <div className="p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
+          <div
+            onClick={() => router.push('/suivi-poids')}
+            className="p-4 w-80 mx-auto hover:scale-110 ease-in duration-300 cursor-pointer	"
+          >
+            <div className="	 p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
+              <h2 className="text-2xl text-center font-bold text-gray-800">
+                Votre dernière pesée
+              </h2>
               <Image src={poids} alt="poids" width={100} height={100} />
-              <h2 className="text-2xl font-bold text-gray-800">Suivi poids</h2>
-              <div className="flex justify-end w-full hover:animate-bounce cursor-pointer">
-                <button
-                  type="button"
-                  onClick={() => router.push('/suivi-poids')}
-                >
-                  <Image src={go} alt="go" width={20} height={20} />
-                </button>
-              </div>
+              <p className="text-xl font-bold">{dernierePesee} kg</p>
             </div>
           </div>
           <div className=" p-4 w-80 mx-auto">
@@ -125,21 +125,17 @@ export default function Dashboard() {
               />
             </div>
           </div>
-          <div className=" p-4 w-80 mx-auto">
+          <div
+            onClick={() => router.push('/suivi-eau')}
+            className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
+          >
             <div className="p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
               <h2 className="text-2xl font-bold text-gray-800 text-center">
                 Conso d&apos;eau <br />
                 journalière
               </h2>
               <WaterWave water={water} waterToDrink={waterToDrink} />
-              <div className="flex justify-end w-full hover:animate-bounce cursor-pointer">
-                <button
-                  type="button"
-                  onClick={() => router.push('/suivi-eau')}
-                >
-                  <Image src={go} alt="go" width={20} height={20} />
-                </button>
-                </div>
+              <div className="flex justify-end w-full hover:animate-bounce cursor-pointer"></div>
             </div>
           </div>
 

@@ -12,21 +12,20 @@ import {
 import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-const WaterTrack = ({water, waterToDrink}) => {
-  console.log(water);
+const WaterTrack = ({ water, waterToDrink }) => {
   const [labels, setLabels] = useState([]);
   const [donnees, setDonnees] = useState([]);
 
-    ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        PointElement,
-        LineElement,
-        Title,
-        Tooltip,
-        Filler,
-        Legend
-      );
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Filler,
+    Legend
+  );
   const options = {
     responsive: true,
     plugins: {
@@ -35,24 +34,22 @@ const WaterTrack = ({water, waterToDrink}) => {
       },
       title: {
         display: false,
-        text: "Votre consommation deau",
+        text: 'Votre consommation deau',
       },
     },
   };
 
-  useEffect(() => {  
-    setLabels(water.map((data) => data.date))
+  useEffect(() => {
+    setLabels(water.map((data) => data.date).slice(-10));
     const donnees = water.map((data) => {
-      data.values;
-      const average = data.values.reduce((acc, obj) => acc + obj.verre, 0) * 200;
+      return data.values.reduce((acc, obj) => acc + obj, 0) * 200;
       return average;
       /* const purcentage = (average * 1000) / waterToDrink;
       return purcentage.toFixed(2); */
-    })
+    }).slice(-10);
     setDonnees(donnees);
   }, [water]);
 
- 
 
   const data = {
     labels,
@@ -66,12 +63,12 @@ const WaterTrack = ({water, waterToDrink}) => {
         tension: 0.5,
       },
     ],
-  }; 
+  };
 
   return (
-    <div className='w-11/12 mx-auto lg:w-2/3'>
-       <Line options={options} data={data} />
-     </div>
+    <div className="w-11/12 mx-auto">
+      <Line options={options} data={data} />
+    </div>
   );
 };
 

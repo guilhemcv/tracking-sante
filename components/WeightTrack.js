@@ -9,21 +9,21 @@ import {
   Legend,
   Filler,
 } from 'chart.js';
+import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-const WeightTrack = ({weight}) => {
+const WeightTrack = ({ weight }) => {
 
-
-    ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        PointElement,
-        LineElement,
-        Title,
-        Tooltip,
-        Filler,
-        Legend
-      );
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Filler,
+    Legend
+  );
   const options = {
     responsive: true,
     plugins: {
@@ -37,8 +37,13 @@ const WeightTrack = ({weight}) => {
     },
   };
 
-   const labels = weight.map(({date}) => date).slice(-10);
-   const donnees = weight.map(({poids}) => poids).slice(-10);
+
+ 
+
+    const labels = weight.map(({date}) => date).slice(-10);
+   const donnees = weight.map(({poids}) => poids).slice(-10);  
+
+  //order objet in array weight by date
 
   const data = {
     labels,
@@ -55,7 +60,7 @@ const WeightTrack = ({weight}) => {
   };
 
   return (
-    <div className='w-2/3'>
+    <div className="w-full lg:w-2/3">
       <Line options={options} data={data} />
     </div>
   );

@@ -9,19 +9,19 @@ const WaterWave = ({ water, waterToDrink }) => {
     const todayWater = [];
     water.forEach((water) => {
       if (water.date === todayDate) {
-        todayWater.push(water.values);
-        const totalVerres =
-          todayWater[0].reduce((acc, obj) => acc + obj.verre, 0) * 20;
-        console.log(totalVerres);
-        const purcentage = (totalVerres * 1000) / waterToDrink;
-        setTodayVerres(purcentage.toFixed(2));
+      //addition the total in values array in water object
+      todayWater.push(water.values.reduce((total, current) => total + current, 0));
+        const purcentage = ((todayWater[0] * 20) * 1000) / waterToDrink;
+        setTodayVerres(purcentage.toFixed(2)); 
       }
     });
   }, [water]);
+  
+  console.log(todayVerres);
 
   return (
     <>
-      <ProgressBar progressColor="blue" hideText score={todayVerres} />
+      <ProgressBar progressColor="blue" hideText score={todayVerres <= 100 ? todayVerres : "100"} />
       <h2 className="text-2xl font-bold text-gray-800 text-center">{todayVerres} %</h2>
     </>
   );
