@@ -38,7 +38,7 @@ export default function Home() {
     router.push('/dashboard');
   }
   return (
-    <div className="h-screen bg-center bg-[url('./assets/images/running-woman.jpg')]">
+    <div className="h-screen bg-center bg-[url('/assets/images/running-woman.jpg')]">
       <NavLanding />
       <Landing displayToast={displayToast} />
       <ToastContainer />
