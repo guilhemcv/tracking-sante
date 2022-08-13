@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const TestCircle = ({ height, weight }) => {
+const TestCircle = ({ height, weight }) => {
   const [imc, setImc] = useState(0);
   const [typeImc, setTypeImc] = useState('');
   const [classe, setClasse] = useState('');
@@ -41,3 +41,5 @@ export const TestCircle = ({ height, weight }) => {
     </div>
   );
 };
+
+export default TestCircle;

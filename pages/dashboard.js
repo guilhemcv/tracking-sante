@@ -3,11 +3,10 @@ import NavAccueil from '../components/NavBar';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../utils/supabase';
-import { TestCircle } from '../components/testCircle';
+import  TestCircle  from '../components/TestCircle';
 import Image from 'next/image';
 import WaterWave from '../components/WaterWave';
 import poids from '../public/assets/images/weight.png';
-import go from '../public/assets/images/logout.png';
 import hello from '../public/assets/images/hello-world.png';
 
 export default function Dashboard() {
