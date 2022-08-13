@@ -9,6 +9,7 @@ import close from '../public/assets/images/close.png';
 
 const NavAccueil = ({ water, weight, lastname, session }) => {
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getProfile();
