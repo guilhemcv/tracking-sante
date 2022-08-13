@@ -8,16 +8,8 @@ import menu from '../public/assets/images/menu.png';
 import close from '../public/assets/images/close.png';
 
 const NavAccueil = ({ water, weight, lastname }) => {
-  const [displayNav, setDisplayNav] = useState(false);
   const [show, setShow] = useState(false);
-  //if screen size is minus or equal to 768px, display the navbar on the top of the page
-  useEffect(() => {
-    if (window.innerWidth <= 768) {
-      setDisplayNav(true);
-    } else {
-      setDisplayNav(false);
-    }
-  }, []);
+
 
   const router = useRouter();
 
