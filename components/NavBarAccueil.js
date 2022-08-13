@@ -10,7 +10,7 @@ const NavLanding = () => {
         <Image src={logo} alt="logo" height={40} width={80} />
       </div>
       <div className="flex items-center justify-around  md:mr-5 md:w-96">
-        <h2>L'appli qui prend soin de vous !</h2>
+        <h2>L&apos;appli qui prend soin de vous !</h2>
       </div>
     </div>
   );
