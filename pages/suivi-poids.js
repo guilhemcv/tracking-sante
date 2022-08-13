@@ -56,7 +56,6 @@ export default function SuiviPoids({ session }) {
   }
 
   useEffect(() => {
-    // find today's date in the weight array
     const today = new Date().toLocaleDateString();
     if (weight !== null && weight.find((item) => item.date === today)) {
       setAlreadyAdded(true);

@@ -10,26 +10,12 @@ import close from '../public/assets/images/close.png';
 const NavAccueil = ({ water, weight, lastname }) => {
   const [show, setShow] = useState(false);
 
-  async function logOut() {
-    try {
-      await supabase.auth.logout();
-      router.push('/');
-    } catch (error) {
-      alert(error.message);
-    }
-  }
+  
 
   const router = useRouter();
 
   return (
-    <div
-      className="flex top-0 w-screen flex-col items-center justify-between z-50  pt-5 text-white  bg-black"
-      style={{
-        height: show ? '100%' : '80px',
-        overflow: show ? 'hidden' : 'visible',
-        position: show ? 'fixed' : 'initial',
-      }}
-    >
+    <div className="flex top-0 w-screen flex-col items-center justify-between z-50  pt-5 text-white  bg-black" style={{height: show ? "100%" : "80px", overflow : show ? "hidden" : "visible", position: show ? "fixed" : "initial"}}>
       <div className="flex  items-center justify-between w-11/12 mx-auto  ">
         <Image src={logo} alt="logo" height={40} width={80} />
         <button onClick={() => setShow(!show)}>
@@ -50,7 +36,7 @@ const NavAccueil = ({ water, weight, lastname }) => {
               className="flex items-center  h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
               href="/dashboard"
             >
-              <a className="hover:text-red-400">Dashboard</a>
+              <a className='hover:text-red-400'>Dashboard</a>
             </Link>
           )}
           {weight !== null && (
@@ -58,7 +44,7 @@ const NavAccueil = ({ water, weight, lastname }) => {
               className="flex items-center h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
               href="/suivi-poids"
             >
-              <a className="hover:text-red-400">Suivi poids</a>
+              <a className='hover:text-red-400'>Suivi poids</a>
             </Link>
           )}{' '}
           {water !== null && (
@@ -66,20 +52,21 @@ const NavAccueil = ({ water, weight, lastname }) => {
               className="flex items-center h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
               href="/suivi-eau"
             >
-              <a className="hover:text-red-400">Suivi eau</a>
+              <a className='hover:text-red-400'>Suivi eau</a>
             </Link>
           )}{' '}
           <Link
             className="flex items-center h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
             href="/profil"
           >
-            <a className="hover:text-red-400">Mon profil</a>
+            <a className='hover:text-red-400'>Mon profil</a>
           </Link>{' '}
           <div>
             <button
               className="bg-orange-500 hover:bg-orange-700 text-sm py-1 px-2 rounded mt-5 mb-5"
               onClick={() => {
-                logOut();
+                supabase.auth.signOut();
+                router.push('/');
               }}
             >
               Déconnexion
