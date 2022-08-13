@@ -8,6 +8,8 @@ import Image from 'next/image';
 import WaterWave from '../components/WaterWave';
 import poids from '../public/assets/images/weight.png';
 import hello from '../public/assets/images/hello-world.png';
+import moon from '../public/assets/images/moon.png';
+import calories from '../public/assets/images/calories.png';
 
 export default function Dashboard() {
   const [session, setSession] = useState(null);
@@ -95,7 +97,7 @@ export default function Dashboard() {
       <div>
         <NavAccueil />
 
-        <div className="grid lg:grid-cols-3  xl:grid-cols-4 md:grid-cols-2 mt-10 md:mb-40 gap-y-5 ">
+        <div className="grid lg:grid-cols-3  xl:grid-cols-3 md:grid-cols-2 mt-10 mb-40 gap-y-5 ">
           <div
             onClick={() => router.push('/profil')}
             className=" p-4 w-80 mx-auto hover:scale-110 ease-in duration-300 cursor-pointer"
@@ -150,6 +152,32 @@ export default function Dashboard() {
               </div>
             </div>
           )}
+          <div
+              onClick={() => router.push('/suivi-sommeil')}
+              className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
+            >
+              <div className="p-8 h-72 rounded shadow-md bg-gray-900 flex flex-col items-center justify-between">
+                <h2 className="text-xl font-bold text-gray-100  text-center">
+                  Temps de sommeil <br />
+                  de la nuit dernière
+                </h2>
+                <Image src={moon} alt="moon" width={100} height={100} />
+                <p className='text-2xl font-bold text-gray-100'>8h45</p>
+              </div>
+            </div>
+            <div
+              onClick={() => router.push('/suivi-sommeil')}
+              className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
+            >
+              <div className="p-8 h-72 rounded shadow-md bg-white flex flex-col items-center justify-between">
+                <h2 className="text-xl font-bold text-gray-900  text-center">
+                  Calories quotidiennes <br />
+                  à dépenser
+                </h2>
+                <Image src={calories} alt="moon" width={100} height={100} />
+                <p className='text-2xl font-bold text-gray-800'>6552 kcal</p>
+              </div>
+            </div>
 
           {/* {lastName === '' && firstName === '' ? (
           <h1>

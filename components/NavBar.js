@@ -48,7 +48,9 @@ const NavAccueil = ({ water, weight, lastname, session }) => {
       }}
     >
       <div className="flex  items-center justify-between w-11/12 mx-auto  ">
-        <Image src={logo} alt="logo" height={40} width={80} />
+        <button onClick={() => router.push('/dashboard')}>
+          <Image src={logo} alt="logo" height={40} width={80} />
+        </button>
         <button onClick={() => setShow(!show)}>
           {show === false && (
             <Image src={menu} alt="add" height={40} width={40} />
@@ -86,6 +88,12 @@ const NavAccueil = ({ water, weight, lastname, session }) => {
               <a className="hover:text-red-400">Suivi eau</a>
             </Link>
           )}{' '}
+          <Link
+            className="flex items-center h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
+            href="/suivi-sommeil"
+          >
+            <a className="hover:text-red-400">Suivi sommeil</a>
+          </Link>
           <Link
             className="flex items-center h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
             href="/profil"

@@ -22,7 +22,7 @@ const WaterWave = ({ water, waterToDrink }) => {
   return (
     <>
       <ProgressBar progressColor="blue" hideText score={todayVerres <= 100 ? todayVerres : "100"} />
-      <h2 className="text-2xl font-bold text-gray-800 text-center">{todayVerres} %</h2>
+      <h2 className="text-2xl font-bold text-gray-800 text-center">{todayVerres === null ? "0" : todayVerres} %</h2>
     </>
   );
 };
