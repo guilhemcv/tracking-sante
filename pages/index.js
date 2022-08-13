@@ -31,6 +31,8 @@ export default function Home() {
       progress: undefined,
     });
   };
+  console.log(session);
+
 
   if (session) {
     router.push('/dashboard');

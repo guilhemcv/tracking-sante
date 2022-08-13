@@ -10,20 +10,22 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import add from '../public/assets/images/add.png';
 import moins from '../public/assets/images/moins.png';
+import { useRouter } from 'next/router';
 
 export default function SuiviEau({ session }) {
   const [loading, setLoading] = useState(true);
   const [water, setWater] = useState([]);
   const [todayGlasses, setTodayGlasses] = useState(0);
-  const [weight, setWeight] = useState([]);
+  const [weight, setWeight] = useState(null);
   const [waterToDrink, setWaterToDrink] = useState(null);
   const [random, setRandom] = useState();
   const [added, setAdded] = useState(false);
   const [waterSelected, setWaterSelected] = useState(false);
   const [nbVerres, setNbVerres] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
-    if (weight.length > 0) {
+    if (weight !== null) {
       const lastWeight = parseInt(weight[weight.length - 1].poids);
       setWaterToDrink((lastWeight - 20) * 15 + 1500);
     }
@@ -36,19 +38,26 @@ export default function SuiviEau({ session }) {
 
   const addWater = () => {
     const today = new Date().toLocaleDateString();
-    if (water.find((data) => data.date === today)) {
-      water.map((data) => {
-        data.values.push(nbVerres);
-      });
+    //get water array. In this array compare date key with today's date. If date key is equal to today's date, then add 1 to glasses key.
+    const waterArray = water.find((item) => item.date === today);
+    if (waterArray) {
+      console.log('waterArray', waterArray);
+      setWater([
+        ...water.filter((item) => item.date !== today),
+        {
+          date: today,
+          values: [...waterArray.values, nbVerres],
+        },
+      ]);
     } else {
       setWater([...water, { date: today, values: [nbVerres] }]);
-
-      //create a new item with the date and the nbVerres
     }
+
     setAdded(true);
   };
 
   console.log(water);
+  console.log(nbVerres);
 
   async function getProfile() {
     try {
@@ -96,18 +105,25 @@ export default function SuiviEau({ session }) {
     } catch (error) {
       alert(error.message);
     } finally {
-      toast.success('💧 Vos consommations ont été rajoutées !', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success(
+        '💧 Vos consommations ont été rajoutées ! redirection vers le dashboard.',
+        {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
       setLoading(false);
       setWaterSelected(false);
       setNbVerres(0);
+      // go back to dashboard after 5 seconds
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 5000);
     }
   }
 

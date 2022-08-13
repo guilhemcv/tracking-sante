@@ -40,8 +40,8 @@ const WeightTrack = ({ weight }) => {
 
  
 
-    const labels = weight.map(({date}) => date).slice(-10);
-   const donnees = weight.map(({poids}) => poids).slice(-10);  
+    const labels = weight !== null ? weight.map(({date}) => date).slice(-10) : new Date().toLocaleDateString();
+   const donnees = weight !== null ? weight.map(({poids}) => poids).slice(-10) : 0;
 
   //order objet in array weight by date
 

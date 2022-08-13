@@ -40,16 +40,19 @@ const WaterTrack = ({ water, waterToDrink }) => {
   };
 
   useEffect(() => {
-    setLabels(water.map((data) => data.date).slice(-10));
-    const donnees = water.map((data) => {
-      return data.values.reduce((acc, obj) => acc + obj, 0) * 200;
-      return average;
-      /* const purcentage = (average * 1000) / waterToDrink;
+    setLabels(water !== null && water.map((data) => data.date).slice(-10));
+    const donnees =
+      water !== null &&
+      water
+        .map((data) => {
+          return data.values.reduce((acc, obj) => acc + obj, 0) * 200;
+          return average;
+          /* const purcentage = (average * 1000) / waterToDrink;
       return purcentage.toFixed(2); */
-    }).slice(-10);
+        })
+        .slice(-10);
     setDonnees(donnees);
   }, [water]);
-
 
   const data = {
     labels,
