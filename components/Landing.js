@@ -23,17 +23,17 @@ export const Landing = ({displayToast}) => {
 
   return (
     <div className="bg-black w-11/12 lg:w-8/12 md:w-9/12 mx-auto mt-4 rounded opacity-80 text-center md:p-2  md:mt-20 md:ml-10 ">
-      <h1 className="md:text-4xl font-bold text-lg w-11/12 mx-auto mt-20 md:mt-0 text-white  py-10 md:py-2">
+      <h1 className="md:text-4xl font-outfit font-bold  text-lg w-11/12 mx-auto mt-20 md:mt-0 text-white  py-10 md:py-2">
         Bienvenue sur l&apos;application <br /> qui prend soin de votre santé !
       </h1>
-      <h2 className="text-lg w-11/12 mx-auto text-white">
+      <h2 className="text-lg w-11/12 mt-5 font-outfit font-medium mx-auto text-white">
         Suivi de votre poids, de votre consommation d&apos;eau, <br /> analyses
         et bien plus encore !
       </h2>
       <div className="col-6 form-widget">
         {!send ? (
           <>
-            <p className="text-white my-5 text-sm w-11/12 mx-auto md:my-10">
+            <p className="text-white my-5 font-outfit text-sm w-11/12 mx-auto md:my-10">
               Se connecter via magic link avec votre email ci-dessous :
             </p>
             <div>
@@ -53,7 +53,7 @@ export const Landing = ({displayToast}) => {
                   displayToast();
                   setSend(true);
                 }}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-10"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-outfit font-bold py-2 px-4 rounded mt-5 mb-10"
                 disabled={loading}
               >
                 <span>{loading ? 'Loading' : 'Recevoir un lien'}</span>
@@ -62,7 +62,7 @@ export const Landing = ({displayToast}) => {
           </>
         ) : (
           <div>
-            <p className="text-white mt-10 pb-20 w-11/12 mx-auto">Consulter votre boite mail ! <br/> (Le message peut arriver dans les spams, pensez à les vérifier !)</p>
+            <p className="text-white mt-10 pb-20 w-11/12 font-outfit mx-auto">Consulter votre boite mail ! <br/> (Le message peut arriver dans les spams, pensez à les vérifier !)</p>
           </div>
         )}
       </div>
