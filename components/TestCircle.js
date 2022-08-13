@@ -32,7 +32,7 @@ const TestCircle = ({ height, weight }) => {
   }, [weight, height]);
 
   return (
-    <div className='pb-24 lg:mb-0'>
+    <div className='lg:mb-0'>
       <div className={classe}>
         <p className="text">
           IMC <br /> {imc} <br /> {typeImc}

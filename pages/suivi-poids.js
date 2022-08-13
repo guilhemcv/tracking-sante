@@ -10,11 +10,14 @@ import Image from 'next/image';
 import add from '../public/assets/images/add.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import TestCircle from '../components/TestCircle';
+import imc from '../public/assets/images/imc.png';
 
 export default function SuiviPoids({ session }) {
   const [loading, setLoading] = useState(true);
   const [alreadyAdded, setAlreadyAdded] = useState(false);
   const [weight, setWeight] = useState([]);
+  const [height, setHeight] = useState(null);
   const [weightSelected, setWeightSelected] = useState(false);
   const [newWeight, setNewWeight] = useState(false);
   const [dateToSave, setDateToSave] = useState(new Date().toLocaleDateString());
@@ -33,7 +36,7 @@ export default function SuiviPoids({ session }) {
 
       let { data, error, status } = await supabase
         .from('profiles')
-        .select(`weight`)
+        .select(`weight, height`)
         .eq('id', user.id)
         .single();
 
@@ -43,6 +46,7 @@ export default function SuiviPoids({ session }) {
 
       if (data) {
         setWeight(data.weight);
+        setHeight(data.height);
       }
     } catch (error) {
       alert(error.message);
@@ -126,6 +130,29 @@ export default function SuiviPoids({ session }) {
           <AverageWeight />
         </div>
       </div>
+      <div
+        className="flex justify-around lg:flex-row flex-col items-center my-20 py-10 border-t-2
+      border-b-2 w-10/12 mx-auto border-solid border-black"
+      >
+        <TestCircle
+          height={height !== null && height}
+          weight={weight.length > 0 && weight[weight.length - 1]}
+        />
+        <div className='flex flex-col items-center lg:w-7/12 w-11/12 mt-10 lg:mt-0'>
+          <p className="text-justify mb-10">
+            L&apos;IMC permet de déterminer de manière objective la corpulence
+            d&apos;une personne. C’est au mathématicien et statisticien Adolphe
+            Quetelet (1796-1874) que l&apos;on doit cet indice. Toutefois, le
+            terme « Indice de Masse Corporelle » n&apos;apparaît qu&apos;en
+            1972, soit bien après la création de ce qui se dénommait à
+            l&apos;origine « Indice de Quetelet ». Depuis 1997, l&apos;OMS
+            utilise cet indice afin d&apos;établir une classification standard
+            de référence en matière de surcharge pondérale, qui puisse être
+            utilisée de manière internationale.
+          </p>
+          <Image src={imc} alt="imc" width={490} height={200} />
+        </div>
+      </div>
       <p className="text-center text-xl mt-20">
         Ici, vous pouvez ajouter votre poids une fois par jour et suivre la
         courbe d&apos;évolution.
@@ -136,7 +163,9 @@ export default function SuiviPoids({ session }) {
             <button type="button" onClick={() => setWeightSelected(true)}>
               <Image src={add} alt="logo ajout" width={40} height={40} />
             </button>
-            <h3 className="md:text-xl font-bold ml-5 md:ml-0">Ajouter votre poids du jour</h3>
+            <h3 className="md:text-xl font-bold ml-5 md:ml-0">
+              Ajouter votre poids du jour
+            </h3>
           </div>
         ) : (
           <div className="mt-20 mb-40 mx-auto md:w-11/12">
@@ -195,9 +224,10 @@ export default function SuiviPoids({ session }) {
       ) : (
         <div className="flex items-center justify-center mt-20 mb-40 text-center">
           <h2 className="md:text-xl font-bold">
-            Vous avez déjà ajouté votre poids du jour. <br /> revenez demain ! 📅
+            Vous avez déjà ajouté votre poids du jour. <br /> revenez demain !
+            📅
           </h2>
-        </div>  
+        </div>
       )}
 
       <Footer />
