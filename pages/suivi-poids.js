@@ -12,8 +12,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TestCircle from '../components/TestCircle';
 import imc from '../public/assets/images/imc.png';
+import { Helmet } from 'react-helmet';
+import { NotConnected } from '../components/NotConnected';
 
-export default function SuiviPoids({ session }) {
+export default function SuiviPoids() {
   const [loading, setLoading] = useState(true);
   const [alreadyAdded, setAlreadyAdded] = useState(false);
   const [weight, setWeight] = useState([]);
@@ -22,8 +24,16 @@ export default function SuiviPoids({ session }) {
   const [newWeight, setNewWeight] = useState(false);
   const [dateToSave, setDateToSave] = useState(new Date().toLocaleDateString());
   const [added, setAdded] = useState(false);
-
   const [random, setRandom] = useState();
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    setSession(supabase.auth.session());
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
 
   useEffect(() => {
     getProfile();
@@ -108,8 +118,11 @@ export default function SuiviPoids({ session }) {
     }
   }
 
-  return (
+  return session ? (
     <div className="">
+      <Helmet>
+        <title>Care - Suivi poids</title>
+      </Helmet>
       <NavAccueil />
       <ToastContainer />
       <div className="flex md:flex-row flex-col items-center justify-center my-10 bg-slate-100 rounded shadow-lg p-4 w-11/12 md:w-9/12 mx-auto">
@@ -137,7 +150,7 @@ export default function SuiviPoids({ session }) {
           height={height !== null && height}
           weight={weight.length > 0 && weight[weight.length - 1]}
         />
-        <div className='flex flex-col items-center lg:w-7/12 w-11/12 mt-10 lg:mt-0'>
+        <div className="flex flex-col items-center lg:w-7/12 w-11/12 mt-10 lg:mt-0">
           <p className="text-justify mb-10">
             L&apos;IMC permet de déterminer de manière objective la corpulence
             d&apos;une personne. C’est au mathématicien et statisticien Adolphe
@@ -231,5 +244,7 @@ export default function SuiviPoids({ session }) {
 
       <Footer />
     </div>
+  ) : (
+    <NotConnected />
   );
 }

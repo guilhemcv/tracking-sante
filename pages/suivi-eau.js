@@ -11,8 +11,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import add from '../public/assets/images/add.png';
 import moins from '../public/assets/images/moins.png';
 import { useRouter } from 'next/router';
+import { Helmet } from 'react-helmet';
+import { NotConnected } from '../components/NotConnected';
 
-export default function SuiviEau({ session }) {
+export default function SuiviEau() {
   const [loading, setLoading] = useState(true);
   const [water, setWater] = useState([]);
   const [todayGlasses, setTodayGlasses] = useState(0);
@@ -23,6 +25,15 @@ export default function SuiviEau({ session }) {
   const [waterSelected, setWaterSelected] = useState(false);
   const [nbVerres, setNbVerres] = useState(0);
   const router = useRouter();
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    setSession(supabase.auth.session());
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
 
   useEffect(() => {
     if (weight !== null) {
@@ -127,8 +138,11 @@ export default function SuiviEau({ session }) {
     }
   }
 
-  return (
+  return session ? (
     <>
+      <Helmet>
+        <title>Care - Suivi eau</title>
+      </Helmet>
       <NavAccueil />
       <ToastContainer />
       <div className="flex md:flex-row flex-col items-center justify-center my-10 bg-slate-100 rounded shadow-lg p-4 w-11/12 md:w-9/12 mx-auto">
@@ -232,5 +246,7 @@ export default function SuiviEau({ session }) {
       )}
       <Footer />
     </>
+  ) : (
+    <NotConnected />
   );
 }

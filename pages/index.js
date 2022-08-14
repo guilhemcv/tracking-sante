@@ -7,6 +7,7 @@ import { Landing } from '../components/Landing';
 import NavLanding from '../components/NavBarAccueil';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Helmet } from 'react-helmet';
 
 export default function Home() {
   const [session, setSession] = useState(null);
@@ -32,12 +33,19 @@ export default function Home() {
     });
   };
 
-
   if (session) {
     router.push('/dashboard');
   }
   return (
     <div className="h-screen bg-center bg-[url('/assets/images/running-woman.jpg')]">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Bienvenue sur Care</title>
+        <meta
+          name="description"
+          content="Care - l'application qui prend soin de vous ! va vous permettre de suivre vos données importantes comme le poids, la consommation d'eau, le suivi du sommeil,..."
+        />
+      </Helmet>
       <NavLanding />
       <Landing displayToast={displayToast} />
       <ToastContainer />

@@ -3,13 +3,15 @@ import NavAccueil from '../components/NavBar';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../utils/supabase';
-import  TestCircle  from '../components/TestCircle';
+import TestCircle from '../components/TestCircle';
 import Image from 'next/image';
 import WaterWave from '../components/WaterWave';
 import poids from '../public/assets/images/weight.png';
 import hello from '../public/assets/images/hello-world.png';
 import moon from '../public/assets/images/moon.png';
 import calories from '../public/assets/images/calories.png';
+import { Helmet } from 'react-helmet';
+import { NotConnected } from '../components/NotConnected';
 
 export default function Dashboard() {
   const [session, setSession] = useState(null);
@@ -92,137 +94,98 @@ export default function Dashboard() {
     }
   }
 
-  return (
-    session && (
-      <div>
-        <NavAccueil />
+  return session ? (
+    <div>
+      <Helmet>
+        <title>Care - Dashboard</title>
+      </Helmet>
+      <NavAccueil />
 
-        <div className="grid lg:grid-cols-3  xl:grid-cols-3 md:grid-cols-2 mt-10 mb-40 gap-y-5 ">
+      <div className="grid lg:grid-cols-3  xl:grid-cols-3 md:grid-cols-2 mt-10 mb-40 gap-y-5 ">
+        <div
+          onClick={() => router.push('/profil')}
+          className=" p-4 w-80 mx-auto hover:scale-110 ease-in duration-300 cursor-pointer"
+        >
+          <div className="p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
+            <h2 className="text-2xl font-bold text-gray-800">
+              Salut {lastName} !
+            </h2>
+            <Image src={hello} alt="hello" width={100} height={100} />
+            <div className="flex flex-col items-center">
+              <h2 className="text-xl font-bold">{dateString}</h2>
+              <h2 className="text-xl font-bold">{timeString}</h2>
+            </div>
+          </div>
+        </div>
+        {weight.length > 0 && (
+          <>
+            <div
+              onClick={() => router.push('/suivi-poids')}
+              className="p-4 w-80 mx-auto hover:scale-110 ease-in duration-300 cursor-pointer	"
+            >
+              <div className="	 p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
+                <h2 className="text-2xl text-center font-bold text-gray-800">
+                  Votre dernière pesée
+                </h2>
+                <Image src={poids} alt="poids" width={100} height={100} />
+                <p className="text-xl font-bold">{dernierePesee} kg</p>
+              </div>
+            </div>
+            <div className=" p-4 w-80 mx-auto">
+              <div className="p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
+                <TestCircle
+                  height={height !== null && height}
+                  weight={weight.length > 0 && weight[weight.length - 1]}
+                />
+              </div>
+            </div>
+          </>
+        )}
+        {water.length > 0 && (
           <div
-            onClick={() => router.push('/profil')}
-            className=" p-4 w-80 mx-auto hover:scale-110 ease-in duration-300 cursor-pointer"
+            onClick={() => router.push('/suivi-eau')}
+            className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
           >
             <div className="p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
-              <h2 className="text-2xl font-bold text-gray-800">
-                Salut {lastName} !
+              <h2 className="text-2xl font-bold text-gray-800 text-center">
+                Conso d&apos;eau <br />
+                journalière
               </h2>
-              <Image src={hello} alt="hello" width={100} height={100} />
-              <div className="flex flex-col items-center">
-                <h2 className="text-xl font-bold">{dateString}</h2>
-                <h2 className="text-xl font-bold">{timeString}</h2>
-              </div>
+              <WaterWave water={water} waterToDrink={waterToDrink} />
+              <div className="flex justify-end w-full hover:animate-bounce cursor-pointer"></div>
             </div>
           </div>
-          {weight.length > 0 && (
-            <>
-              <div
-                onClick={() => router.push('/suivi-poids')}
-                className="p-4 w-80 mx-auto hover:scale-110 ease-in duration-300 cursor-pointer	"
-              >
-                <div className="	 p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
-                  <h2 className="text-2xl text-center font-bold text-gray-800">
-                    Votre dernière pesée
-                  </h2>
-                  <Image src={poids} alt="poids" width={100} height={100} />
-                  <p className="text-xl font-bold">{dernierePesee} kg</p>
-                </div>
-              </div>
-              <div className=" p-4 w-80 mx-auto">
-                <div className="p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
-                  <TestCircle
-                    height={height !== null && height}
-                    weight={weight.length > 0 && weight[weight.length - 1]}
-                  />
-                </div>
-              </div>
-            </>
-          )}
-          {water.length > 0 && (
-            <div
-              onClick={() => router.push('/suivi-eau')}
-              className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
-            >
-              <div className="p-8 h-72 bg-white rounded shadow-md flex flex-col items-center justify-between">
-                <h2 className="text-2xl font-bold text-gray-800 text-center">
-                  Conso d&apos;eau <br />
-                  journalière
-                </h2>
-                <WaterWave water={water} waterToDrink={waterToDrink} />
-                <div className="flex justify-end w-full hover:animate-bounce cursor-pointer"></div>
-              </div>
-            </div>
-          )}
-          <div
-              onClick={() => router.push('/suivi-sommeil')}
-              className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
-            >
-              <div className="p-8 h-72 rounded shadow-md bg-gray-900 flex flex-col items-center justify-between">
-                <h2 className="text-xl font-bold text-gray-100  text-center">
-                  Temps de sommeil <br />
-                  de la nuit dernière
-                </h2>
-                <Image src={moon} alt="moon" width={100} height={100} />
-                <p className='text-2xl font-bold text-gray-100'>8h45</p>
-              </div>
-            </div>
-            <div
-              onClick={() => router.push('/suivi-sommeil')}
-              className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
-            >
-              <div className="p-8 h-72 rounded shadow-md bg-white flex flex-col items-center justify-between">
-                <h2 className="text-xl font-bold text-gray-900  text-center">
-                  Calories quotidiennes <br />
-                  à dépenser
-                </h2>
-                <Image src={calories} alt="moon" width={100} height={100} />
-                <p className='text-2xl font-bold text-gray-800'>6552 kcal</p>
-              </div>
-            </div>
-
-          {/* {lastName === '' && firstName === '' ? (
-          <h1>
-            Si vous venez de vous inscrire, compléter vos données sur
-            l&apos;onglet profil
-          </h1>
-        ) : (
-          <h1 className="text-2xl text-center my-10">
-            Hello {lastName} ! on est le {dateString} et il est {timeString}.
-          </h1>
         )}
-        <div className="border-b-black pb-3 flex justify-between w-11/12 mx-auto mb-10 border-solid border-b-2 text-xl">
-          <h2>Données sur le poids</h2>
-          <div className="flex justify-end">
-            <p className="mr-5">ajouter une donnée</p>
-            <button onClick={() => router.push("/ajouter")}>
-              <Image src={add} height={30} width={30} alt="logo ajouter" />
-            </button>
+        <div
+          onClick={() => router.push('/suivi-sommeil')}
+          className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
+        >
+          <div className="p-8 h-72 rounded shadow-md bg-gray-900 flex flex-col items-center justify-between">
+            <h2 className="text-xl font-bold text-gray-100  text-center">
+              Temps de sommeil <br />
+              de la nuit dernière
+            </h2>
+            <Image src={moon} alt="moon" width={100} height={100} />
+            <p className="text-2xl font-bold text-gray-100">8h45</p>
           </div>
         </div>
-        <div className="flex flex-col lg:flex-row justify-around items-center">
-          <WeightTrack weight={weight} />
-          <TestCircle
-            height={height !== null && height}
-            weight={weight.length > 0 && weight[weight.length - 1]}
-          />
-        </div>
-        <WaterWave />
-        <Footer />
-      </div>
-    ) : (
-      <div>
-        <h1>Vous n&apos;êtes pas connecté</h1>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5"
-          onClick={() => router.push('/')}
+        <div
+          onClick={() => router.push('/suivi-sommeil')}
+          className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
         >
-          Retour
-        </button>
-        <Footer />
-       */}
+          <div className="p-8 h-72 rounded shadow-md bg-white flex flex-col items-center justify-between">
+            <h2 className="text-xl font-bold text-gray-900  text-center">
+              Calories quotidiennes <br />à dépenser
+            </h2>
+            <Image src={calories} alt="moon" width={100} height={100} />
+            <p className="text-2xl font-bold text-gray-800">6552 kcal</p>
+          </div>
         </div>
-
-        <Footer />
       </div>
-    )
+
+      <Footer />
+    </div>
+  ) : (
+    <NotConnected />
   );
 }
