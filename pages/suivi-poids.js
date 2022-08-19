@@ -140,7 +140,7 @@ export default function SuiviPoids() {
   }
 
   return session ? (
-    weight.length === 0 && height === null && wait ? (
+    wait && weight.length === 0 && height === null ? (
       <div>
         <NavAccueil />
         <div className="flex flex-col items-center">
