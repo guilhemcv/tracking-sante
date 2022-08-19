@@ -128,23 +128,24 @@ export default function Dashboard() {
     if (sexe === 'masculin' && weight.length > 0 && height !== null) {
       setCalories(
         Math.trunc(
-          (13.707 * weight[weight.length - 1].poids +
-            492.3 * (height / 100) -
-            6.673 * age +
+          ((13.707 * weight[weight.length - 1].poids) +
+            (492.3 * (height / 100)) -
+            (6.673 * age) +
             77.607) *
             intensity
         )
       );
     }
-    if (sexe === 'feminin') {
+    if (sexe === 'feminin' && weight.length > 0 && height !== null) {
       setCalories(
         Math.trunc(
-          (9.74 * weight[weight.length - 1].poids +
-            172.9 * (height / 100) -
-            4.737 * age +
+          ((9.74 * weight[weight.length - 1].poids) +
+            (172.9 * (height / 100)) -
+            (4.737 * age) +
             667.051) *
             intensity
         )
+      );
     }
   }, [sexe, weight, height, age, activity]);
 
