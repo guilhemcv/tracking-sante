@@ -2,7 +2,7 @@ import { Footer } from '../components/Footer';
 import NavAccueil from '../components/NavBar';
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../utils/supabase';
-import { infoEau } from '../data/InfoEau';
+import { infoSommeil } from '../data/InfoSommeil';
 import idea from '../public/assets/images/idea.png';
 import Image from 'next/image';
 import { ToastContainer, toast } from 'react-toastify';
@@ -45,6 +45,7 @@ export default function SuiviEau() {
     if (night.length > 0 && night.find((item) => item.date === yesterday)) {
       setAlreadyAdded(true);
     }
+    setRandom(infoSommeil[Math.floor(Math.random() * infoSommeil.length)].info)
   }, [night, yesterday]);
 
   useEffect(() => {
@@ -131,10 +132,9 @@ export default function SuiviEau() {
       }, 5000);
     }
   }
-  console.log(hourToSave);
 
   return session ? (
-    
+
     <>
       <Helmet>
         <title>Care - Suivi sommeil</title>

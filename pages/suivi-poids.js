@@ -132,7 +132,7 @@ export default function SuiviPoids() {
         <NavAccueil />
         <div className='flex flex-col items-center'>
           <p className="text-2xl w-9/12 mx-auto font-bold text-center mt-10">
-            Rendez vous sur votre profil pour ajouter vos données nécessaires au
+            Rendez vous sur votre profil pour ajouter les données nécessaires au
             bon fonctionnement de l&apos;application.
           </p>
           <button

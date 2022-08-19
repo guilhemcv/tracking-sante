@@ -18,7 +18,6 @@ export default function Profil() {
     });
   }, []);
 
-  console.log(session);
 
   return session ? (
     <div>

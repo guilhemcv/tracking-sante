@@ -51,7 +51,6 @@ export default function SuiviEau() {
     const today = new Date().toLocaleDateString();
     const waterArray = water.find((item) => item.date === today);
     if (waterArray) {
-      console.log('waterArray', waterArray);
       setWater([
         ...water.filter((item) => item.date !== today),
         {
@@ -66,8 +65,7 @@ export default function SuiviEau() {
     setAdded(true);
   };
 
-  console.log(water);
-  console.log(nbVerres);
+
 
   async function getProfile() {
     try {
@@ -142,7 +140,7 @@ export default function SuiviEau() {
         <NavAccueil />
         <div className="flex flex-col items-center">
           <p className="text-2xl w-9/12 mx-auto font-bold text-center mt-10">
-            Rendez vous sur votre profil pour ajouter vos données nécessaires au
+            Rendez vous sur votre profil pour ajouter les données nécessaires au
             bon fonctionnement de l&apos;application.
           </p>
           <button

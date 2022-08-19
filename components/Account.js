@@ -17,8 +17,6 @@ export default function Account({ session }) {
   const [sexe, setSexe] = useState(null);
   const [activity, setActivity] = useState(null);
 
-  console.log(weight);
-
   useEffect(() => {
     getProfile();
   }, [session]);
@@ -53,9 +51,6 @@ export default function Account({ session }) {
       setLoading(false);
     }
   }
-
-  console.log(age);
-  console.log(sexe);
 
   async function updateProfile({
     lastname,
@@ -180,26 +175,25 @@ export default function Account({ session }) {
           </div>
         )}
 
-          <div className="flex w-full flex-col my-5">
-            <label
-              className="block  font-bold  text-gray-700 mb-2"
-              htmlFor="weight"
-            >
-              Votre Poids (en kg) :
-            </label>
-            <input
-              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-l border-gray-300 rounded-md"
-              id="weight"
-              type="weight"
-              required="required"
-              placeholder={
-                Array.isArray(weight) ? weight[weight.length - 1].poids : "65"
-              }
-              disabled={Array.isArray(weight)}
-              onChange={(e) => setPoids(e.target.value)}
-            />
-          </div>
-        
+        <div className="flex w-full flex-col my-5">
+          <label
+            className="block  font-bold  text-gray-700 mb-2"
+            htmlFor="weight"
+          >
+            Votre Poids (en kg) :
+          </label>
+          <input
+            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-l border-gray-300 rounded-md"
+            id="weight"
+            type="weight"
+            required="required"
+            placeholder={
+              Array.isArray(weight) ? weight[weight.length - 1].poids : '65'
+            }
+            disabled={Array.isArray(weight)}
+            onChange={(e) => setPoids(e.target.value)}
+          />
+        </div>
 
         <div className="flex w-full flex-col my-5">
           <label
