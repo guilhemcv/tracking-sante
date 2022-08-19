@@ -49,7 +49,7 @@ export default function Dashboard() {
   const waiting = () => {
     setTimeout(() => {
       setWait(false);
-    }, 1000);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -62,7 +62,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     getProfile();
-    waiting();
+    return () => {
+      waiting();
+    };
   }, [session]);
 
   useEffect(() => {
