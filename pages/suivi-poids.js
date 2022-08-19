@@ -27,6 +27,7 @@ export default function SuiviPoids() {
   const [added, setAdded] = useState(false);
   const [random, setRandom] = useState();
   const [session, setSession] = useState(null);
+  const [wait, setWait] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -37,8 +38,16 @@ export default function SuiviPoids() {
     });
   }, []);
 
+  const waiting = () => {
+    setTimeout(() => {
+      setWait(false);
+    }
+    , 1000);
+  }
+
   useEffect(() => {
     getProfile();
+    waiting();
   }, [session]);
 
   async function getProfile() {
@@ -125,11 +134,12 @@ export default function SuiviPoids() {
       setAdded(false);
       setLoading(false);
       setWeightSelected(false);
+      setAlreadyAdded(true);
     }
   }
 
   return session ? (
-    weight.length === 0 && height === null ? (
+    weight.length === 0 && height === null && wait ? (
       <div>
         <NavAccueil />
         <div className="flex flex-col items-center">

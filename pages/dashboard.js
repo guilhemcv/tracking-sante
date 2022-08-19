@@ -29,6 +29,7 @@ export default function Dashboard() {
   const [calories, setCalories] = useState(null);
   const [activity, setActivity] = useState(null);
   const [lastNight, setLastNight] = useState(null);
+  const [wait, setWait] = useState(true);
   const router = useRouter();
 
   console.log(lastName, water, weight);
@@ -45,6 +46,11 @@ export default function Dashboard() {
   const minutesString = minutes < 10 ? `0${minutes}` : minutes;
   const timeString = `${hours}:${minutesString}`;
 
+  const waiting = () => {
+    setTimeout(() => {
+      setWait(false);
+    } , 1000);
+
   useEffect(() => {
     setSession(supabase.auth.session());
 
@@ -55,6 +61,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     getProfile();
+    waiting();
   }, [session]);
 
   useEffect(() => {
@@ -176,7 +183,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        {weight.length === 0 && height === null && lastName === null && sexe === null && age === null && activity === null  && (
+        {weight.length === 0 && height === null && lastName === null && sexe === null && age === null && activity === null && wait  && (
           <div
             onClick={() => router.push('/profil')}
             className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
