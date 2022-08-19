@@ -75,16 +75,16 @@ export default function SuiviPoids() {
     setRandom(infoPoids[Math.floor(Math.random() * infoPoids.length)].info);
   }, [weight]);
 
-
   const addWeight = () => {
-    if (weight.length === 0) {
+    if (weight.length > 0) {
       setWeight([
+        ...weight,
         { date: dateToSave.split('-').reverse().join('/'), poids: newWeight },
       ]);
       setAdded(true);
-    } else {
+    }
+    if (weight.length === 0) {
       setWeight([
-        ...weight,
         { date: dateToSave.split('-').reverse().join('/'), poids: newWeight },
       ]);
       setAdded(true);
@@ -130,7 +130,7 @@ export default function SuiviPoids() {
     weight.length === 0 && height === null ? (
       <div>
         <NavAccueil />
-        <div className='flex flex-col items-center'>
+        <div className="flex flex-col items-center">
           <p className="text-2xl w-9/12 mx-auto font-bold text-center mt-10">
             Rendez vous sur votre profil pour ajouter les données nécessaires au
             bon fonctionnement de l&apos;application.
