@@ -186,13 +186,13 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        {wait &&
-          weight.length === 0 &&
+        {weight.length === 0 &&
           height === null &&
           lastName === null &&
           sexe === null &&
           age === null &&
-          activity === null && (
+          activity === null &&
+          wait && (
             <div
               onClick={() => router.push('/profil')}
               className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
