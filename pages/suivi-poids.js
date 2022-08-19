@@ -41,9 +41,8 @@ export default function SuiviPoids() {
   const waiting = () => {
     setTimeout(() => {
       setWait(false);
-    }
-    , 1000);
-  }
+    }, 1000);
+  };
 
   useEffect(() => {
     getProfile();

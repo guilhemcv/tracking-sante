@@ -49,7 +49,8 @@ export default function Dashboard() {
   const waiting = () => {
     setTimeout(() => {
       setWait(false);
-    } , 1000);
+    }, 1000);
+  };
 
   useEffect(() => {
     setSession(supabase.auth.session());
@@ -183,19 +184,26 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        {weight.length === 0 && height === null && lastName === null && sexe === null && age === null && activity === null && wait  && (
-          <div
-            onClick={() => router.push('/profil')}
-            className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
-          >
-            <div className="p-8 h-72 bg-red-500 rounded shadow-md flex flex-col items-center justify-between">
-              <h2 className="text-2xl font-bold text-white text-center">
-                Pour profiter de l&apos;application <br />
-                pensez a completer tous les éléments du profil en cliquant ici.
-              </h2>
+        {weight.length === 0 &&
+          height === null &&
+          lastName === null &&
+          sexe === null &&
+          age === null &&
+          activity === null &&
+          wait && (
+            <div
+              onClick={() => router.push('/profil')}
+              className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
+            >
+              <div className="p-8 h-72 bg-red-500 rounded shadow-md flex flex-col items-center justify-between">
+                <h2 className="text-2xl font-bold text-white text-center">
+                  Pour profiter de l&apos;application <br />
+                  pensez a completer tous les éléments du profil en cliquant
+                  ici.
+                </h2>
+              </div>
             </div>
-          </div>
-        )}
+          )}
         {weight.length > 0 && (
           <>
             <div
