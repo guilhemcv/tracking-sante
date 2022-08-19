@@ -215,7 +215,7 @@ export default function Dashboard() {
             </div>
           </>
         )}
-        {water.length > 0 && (
+        
           <div
             onClick={() => router.push('/suivi-eau')}
             className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
@@ -225,11 +225,17 @@ export default function Dashboard() {
                 Conso d&apos;eau <br />
                 journalière
               </h2>
+              {water.length > 0 ? (
               <WaterWave water={water} waterToDrink={waterToDrink} />
+              ) : (
+              <div className="flex flex-col items-center justify-center">
+                <h2 className="text-xl font-bold">pas de données.</h2>
+              </div>
+              )}
               <div className="flex justify-end w-full hover:animate-bounce cursor-pointer"></div>
             </div>
           </div>
-        )}
+        
 
         <div
           onClick={() => router.push('/suivi-sommeil')}
