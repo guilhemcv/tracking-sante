@@ -68,11 +68,13 @@ export default function SuiviPoids() {
   }
 
   useEffect(() => {
-    const today = new Date().toLocaleDateString();
-    if (weight !== null && weight.find((item) => item.date === today)) {
-      setAlreadyAdded(true);
-    }
     setRandom(infoPoids[Math.floor(Math.random() * infoPoids.length)].info);
+    return () => {
+      const today = new Date().toLocaleDateString();
+      if (weight !== null && weight.find((item) => item.date === today)) {
+        setAlreadyAdded(true);
+      }
+    };
   }, [weight]);
 
   const addWeight = () => {
