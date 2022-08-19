@@ -8,14 +8,24 @@ import NavLanding from '../components/NavBarAccueil';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet';
+import { Cookie } from '../components/Cookie';
 
 export default function Home() {
   const [session, setSession] = useState(null);
+  const [wait, setWait] = useState(false);
   const router = useRouter();
+
+  const show = () => {
+    setTimeout(() => {
+      setWait(true);
+    } , 2000);
+  }
+
+
 
   useEffect(() => {
     setSession(supabase.auth.session());
-
+    show();
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
@@ -49,6 +59,8 @@ export default function Home() {
       <NavLanding />
       <Landing displayToast={displayToast} />
       <ToastContainer />
+
+      {wait && <Cookie />}
       <Footer />
     </div>
   );

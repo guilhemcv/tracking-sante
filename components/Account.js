@@ -13,8 +13,9 @@ export default function Account({ session }) {
   const [poids, setPoids] = useState(null);
   const [updated, setUpdated] = useState(false);
   const [water, setWater] = useState(null);
-
-  console.log(weight);
+  const [age, setAge] = useState(null);
+  const [sexe, setSexe] = useState(null);
+  const [activity, setActivity] = useState(null);
 
   useEffect(() => {
     getProfile();
@@ -27,7 +28,7 @@ export default function Account({ session }) {
 
       let { data, error, status } = await supabase
         .from('profiles')
-        .select(`username, lastname, height, weight`)
+        .select(`username, lastname, height, weight, age, sexe, activity`)
         .eq('id', user.id)
         .single();
 
@@ -40,6 +41,9 @@ export default function Account({ session }) {
         setHeight(data.height);
         setWeight(data.weight);
         setWater(data.water);
+        setAge(data.age);
+        setSexe(data.sexe);
+        setActivity(data.activity);
       }
     } catch (error) {
       alert(error.message);
@@ -48,7 +52,15 @@ export default function Account({ session }) {
     }
   }
 
-  async function updateProfile({ lastname, height, weight, water }) {
+  async function updateProfile({
+    lastname,
+    height,
+    weight,
+    water,
+    activity,
+    age,
+    sexe,
+  }) {
     try {
       setLoading(true);
       const user = supabase.auth.user();
@@ -56,10 +68,16 @@ export default function Account({ session }) {
       const updates = {
         id: user.id,
         lastname,
-        weight: [{ date: new Date().toLocaleDateString(), poids }],
+        weight:
+          weight !== null
+            ? weight
+            : [{ date: new Date().toLocaleDateString(), poids }],
         height,
         water: [{ date: new Date().toLocaleDateString(), values: [0] }],
         updated_at: new Date(),
+        age,
+        sexe,
+        activity,
       };
 
       let { error } = await supabase.from('profiles').upsert(updates, {
@@ -120,6 +138,42 @@ export default function Account({ session }) {
             onChange={(e) => setLastname(e.target.value)}
           />
         </div>
+        <div className="flex w-full flex-col my-5">
+          <label className="block  font-bold  text-gray-700 mb-2" htmlFor="age">
+            Votre age
+          </label>
+          <input
+            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-l border-gray-300 rounded-md"
+            id="age"
+            type="number"
+            value={age || ''}
+            required="required"
+            onChange={(e) => setAge(e.target.value)}
+          />
+        </div>
+        {sexe !== null ? (
+          <div>{sexe}</div>
+        ) : (
+          <div className="flex w-full flex-col my-5">
+            <label
+              className="block  font-bold  text-gray-700 mb-2"
+              htmlFor="age"
+            >
+              Votre sexe ?
+            </label>
+            <select
+              className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-l border-gray-300 rounded-md"
+              id="sexe"
+              type="text"
+              required="required"
+              onChange={(e) => setSexe(e.target.value)}
+            >
+              <option value="">Sélectionnez votre sexe :</option>
+              <option value="masculin">Homme</option>
+              <option value="feminin">Femme</option>
+            </select>
+          </div>
+        )}
 
         <div className="flex w-full flex-col my-5">
           <label
@@ -133,8 +187,8 @@ export default function Account({ session }) {
             id="weight"
             type="weight"
             required="required"
-            defaultValue={
-              Array.isArray(weight) ? weight[weight.length - 1].poids : ''
+            placeholder={
+              Array.isArray(weight) ? weight[weight.length - 1].poids : '65'
             }
             disabled={Array.isArray(weight)}
             onChange={(e) => setPoids(e.target.value)}
@@ -157,11 +211,39 @@ export default function Account({ session }) {
             onChange={(e) => setHeight(e.target.value)}
           />
         </div>
+        <div className="flex w-full flex-col my-5">
+          <label className="block  font-bold  text-gray-700 mb-2" htmlFor="age">
+            Évaluez votre activité journalière
+          </label>
+          <select
+            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-l border-gray-300 rounded-md"
+            id="activity"
+            type="text"
+            required="required"
+            onChange={(e) => setActivity(e.target.value)}
+          >
+            <option value="">Sélectionnez :</option>
+            <option value="peu actif">
+              Peu actif (assis la plupart du temps. ex : travail de bureau)
+            </option>
+            <option value="moyen actif">
+              Moyennement actif (debout la plupart du temps ex: professeur)
+            </option>
+            <option value="actif">
+              Actif (marche la plupart du temps. ex: serveur, vendeur)
+            </option>
+            <option value="tres actif">
+              Très actif (activité très physique. ex: ouvrier)
+            </option>
+          </select>
+        </div>
         <div className="flex w-full justify-around">
           <div>
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5"
-              onClick={() => updateProfile({ height, lastname, weight })}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-40"
+              onClick={() =>
+                updateProfile({ height, lastname, weight, age, sexe, activity })
+              }
               disabled={loading}
             >
               {loading ? 'Loading ...' : 'Mettre à jour'}

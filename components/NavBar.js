@@ -64,30 +64,24 @@ const NavAccueil = ({ water, weight, lastname, session }) => {
       </div>
       {show && (
         <div className="flex  flex-col h-96 text-xl  items-center justify-around absolute pt-40">
-          {lastname !== null && (
-            <Link
-              className="flex items-center  h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
-              href="/dashboard"
-            >
-              <a className="hover:text-red-400">Dashboard</a>
-            </Link>
-          )}
-          {weight !== null && (
-            <Link
-              className="flex items-center h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
-              href="/suivi-poids"
-            >
-              <a className="hover:text-red-400">Suivi poids</a>
-            </Link>
-          )}{' '}
-          {water !== null && (
-            <Link
-              className="flex items-center h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
-              href="/suivi-eau"
-            >
-              <a className="hover:text-red-400">Suivi eau</a>
-            </Link>
-          )}{' '}
+          <Link
+            className="flex items-center  h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
+            href="/dashboard"
+          >
+            <a className="hover:text-red-400">Dashboard</a>
+          </Link>
+          <Link
+            className="flex items-center h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
+            href="/suivi-poids"
+          >
+            <a className="hover:text-red-400">Suivi poids</a>
+          </Link>{' '}
+          <Link
+            className="flex items-center h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
+            href="/suivi-eau"
+          >
+            <a className="hover:text-red-400">Suivi eau</a>
+          </Link>{' '}
           <Link
             className="flex items-center h-12 px-3 font-prompt hover:rounded-sm hover:text-nav hover:bg-white hover:shadow-sm"
             href="/suivi-sommeil"

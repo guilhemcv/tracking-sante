@@ -9,7 +9,7 @@ import WaterWave from '../components/WaterWave';
 import poids from '../public/assets/images/weight.png';
 import hello from '../public/assets/images/hello-world.png';
 import moon from '../public/assets/images/moon.png';
-import calories from '../public/assets/images/calories.png';
+import imgCalories from '../public/assets/images/calories.png';
 import { Helmet } from 'react-helmet';
 import { NotConnected } from '../components/NotConnected';
 
@@ -23,6 +23,12 @@ export default function Dashboard() {
   const [lastName, setLastName] = useState(null);
   const [loading, setLoading] = useState(false);
   const [dernierePesee, setDernierePesee] = useState(null);
+  const [sexe, setSexe] = useState(null);
+  const [age, setAge] = useState(null);
+  const [night, setNight] = useState(null);
+  const [calories, setCalories] = useState(null);
+  const [activity, setActivity] = useState(null);
+  const [lastNight, setLastNight] = useState(null);
   const router = useRouter();
 
   console.log(lastName, water, weight);
@@ -59,8 +65,6 @@ export default function Dashboard() {
     }
   }, [weight]);
 
-  console.log(waterToDrink);
-
   async function getProfile() {
     try {
       setLoading(true);
@@ -68,7 +72,9 @@ export default function Dashboard() {
 
       let { data, error, status } = await supabase
         .from('profiles')
-        .select(`weight, water, username, lastname, height`)
+        .select(
+          `weight, water, username, lastname, height, sexe, age, activity, night`
+        )
         .eq('id', user.id)
         .single();
 
@@ -86,6 +92,10 @@ export default function Dashboard() {
         setHeight(data.height);
         setLastName(data.lastname);
         setFirstName(data.username);
+        setSexe(data.sexe);
+        setAge(data.age);
+        setActivity(data.activity);
+        setNight(data.night);
       }
     } catch (error) {
       alert(error.message);
@@ -93,6 +103,55 @@ export default function Dashboard() {
       setLoading(false);
     }
   }
+
+  console.log(weight, water, night);
+
+  useEffect(() => {
+    //set lastNight with last index of night
+    if (night !== null && night.length > 0) {
+      const lastNight = night[night.length - 1];
+      setLastNight(lastNight);
+    }
+  }, [night]);
+
+  console.log(lastNight);
+  console.log(night);
+
+  useEffect(() => {
+    let intensity = 0;
+    if (activity === 'peu actif') {
+      intensity = 1.2;
+    } else if (activity === 'moyen actif') {
+      intensity = 1.375;
+    } else if (activity === 'actif') {
+      intensity = 1.55;
+    } else if (activity === 'tres actif') {
+      intensity = 1.9;
+    }
+
+    if (sexe === 'masculin' && weight.length > 0 && height !== null) {
+      setCalories(
+        Math.trunc(
+          (9.74 * weight[weight.length - 1].poids +
+            172.9 * (height / 100) -
+            4.737 * age +
+            667.051) *
+            intensity
+        )
+      );
+    }
+    if (sexe === 'feminin') {
+      setCalories(
+        ((9, 740 * weight[weight.length - 1].poids) +
+          17.29 * height -
+          4.737 * age +
+          667.051) *
+          intensity
+      );
+    }
+  }, [sexe, weight, height, age, activity]);
+
+  console.log(calories);
 
   return session ? (
     <div>
@@ -117,6 +176,19 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
+        {weight.length === 0 && height === null && lastName === null && sexe === null && age === null && activity === null  && (
+          <div
+            onClick={() => router.push('/profil')}
+            className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
+          >
+            <div className="p-8 h-72 bg-red-500 rounded shadow-md flex flex-col items-center justify-between">
+              <h2 className="text-2xl font-bold text-white text-center">
+                Pour profiter de l&apos;application <br />
+                pensez a completer tous les éléments du profil en cliquant ici.
+              </h2>
+            </div>
+          </div>
+        )}
         {weight.length > 0 && (
           <>
             <div
@@ -156,6 +228,7 @@ export default function Dashboard() {
             </div>
           </div>
         )}
+
         <div
           onClick={() => router.push('/suivi-sommeil')}
           className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
@@ -166,19 +239,25 @@ export default function Dashboard() {
               de la nuit dernière
             </h2>
             <Image src={moon} alt="moon" width={100} height={100} />
-            <p className="text-2xl font-bold text-gray-100">8h45</p>
+            <p className="text-2xl font-bold text-gray-100">
+              {lastNight !== null
+                ? `${lastNight.nuit.split(':')[0]}h${
+                    lastNight.nuit.split(':')[1]
+                  }`
+                : '00h00'}
+            </p>
           </div>
         </div>
-        <div
-          onClick={() => router.push('/suivi-sommeil')}
-          className=" p-4 w-80 mx-auto cursor-pointer hover:scale-110 ease-in duration-300  "
-        >
+
+        <div className=" p-4 w-80 mx-auto ">
           <div className="p-8 h-72 rounded shadow-md bg-white flex flex-col items-center justify-between">
             <h2 className="text-xl font-bold text-gray-900  text-center">
               Calories quotidiennes <br />à dépenser
             </h2>
-            <Image src={calories} alt="moon" width={100} height={100} />
-            <p className="text-2xl font-bold text-gray-800">6552 kcal</p>
+            <Image src={imgCalories} alt="moon" width={100} height={100} />
+            <p className="text-2xl font-bold text-gray-800">
+              {age !== null && sexe !== null ? `${calories} kcal` : '0'}
+            </p>
           </div>
         </div>
       </div>
