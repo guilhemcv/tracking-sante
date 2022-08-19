@@ -49,7 +49,6 @@ export default function SuiviEau() {
 
   const addWater = () => {
     const today = new Date().toLocaleDateString();
-    //get water array. In this array compare date key with today's date. If date key is equal to today's date, then add 1 to glasses key.
     const waterArray = water.find((item) => item.date === today);
     if (waterArray) {
       console.log('waterArray', waterArray);
@@ -86,7 +85,7 @@ export default function SuiviEau() {
       }
 
       if (data) {
-        setWater(data.water);
+        setWater(data.water === null ? [] : data.water);
         setWeight(data.weight);
       }
     } catch (error) {
@@ -131,7 +130,6 @@ export default function SuiviEau() {
       setLoading(false);
       setWaterSelected(false);
       setNbVerres(0);
-      // go back to dashboard after 5 seconds
       setTimeout(() => {
         router.push('/dashboard');
       }, 5000);
@@ -139,113 +137,141 @@ export default function SuiviEau() {
   }
 
   return session ? (
-    <>
-      <Helmet>
-        <title>Care - Suivi eau</title>
-      </Helmet>
-      <NavAccueil />
-      <ToastContainer />
-      <div className="flex md:flex-row flex-col items-center justify-center my-10 bg-slate-100 rounded shadow-lg p-4 w-11/12 md:w-9/12 mx-auto">
-        <Image src={idea} alt="idea" width={50} height={50} />
-        <h1 className="md:ml-20 text-center md:text-left">
-          <span className="md:text-xl font-bold">Le saviez-vous ? </span>
-          <br />
-          {random}
-        </h1>
-      </div>
-      <h2 className="w-11/12 mx-auto text-center my-10 md:text-xl font-bold">
-        Selon votre morphologie et votre age, vous devez boire{' '}
-        <span className="text-blue-500"> {waterToDrink} ml </span> d&apos;eau
-        par jour, soit environ {Math.ceil(waterToDrink / 200)} verres de 20 cl.
-      </h2>
-      <WaterTrack water={water} waterToDrink={waterToDrink} />
-      <p className="text-center text-xl my-20">
-        Ici, vous pouvez ajouter votre consommation d&apos;eau au fur et à
-        mesure de la journée.
-      </p>
-      {!waterSelected ? (
-        <div className="flex  items-center justify-center w-11/12 md:justify-around mx-auto md:w-96 mt-10 mb-40">
-          <button type="button" onClick={() => setWaterSelected(true)}>
-            <Image src={add} alt="logo ajout" width={40} height={40} />
+    weight === null ? (
+      <div>
+        <NavAccueil />
+        <div className="flex flex-col items-center">
+          <p className="text-2xl w-9/12 mx-auto font-bold text-center mt-10">
+            Rendez vous sur votre profil pour ajouter vos données nécessaires au
+            bon fonctionnement de l&apos;application.
+          </p>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5"
+            type="button"
+            onClick={() => {
+              router.push('/profil');
+            }}
+          >
+            Mon profil
           </button>
-          <h3 className="md:text-xl font-bold ml-5 md:ml-0">
-            Ajouter une consommation d&apos;eau
-          </h3>
         </div>
-      ) : (
-        <div className="mt-20 mb-40 mx-auto md:w-11/12">
-          {!added && (
-            <>
-              <div className="flex w-9/12 md:w-6/12 justify-between md:justify-between mx-auto">
-                <p className="mr-10 w-22 font-bold">Date du jour :</p>
-                <p>{new Date().toLocaleDateString()}</p>
-              </div>
-              <div className="flex flex-col w-9/12 md:w-6/12 justify-between md:justify-between mx-auto mt-5 mb-10 md:mb-0">
-                <p className="text-center font-bold">
-                  Choisir le nombre de verres consommés (20cl) :
-                </p>
-                <div className="flex items-center justify-around w-28 mx-auto mt-10">
-                  <button onClick={() => setNbVerres(nbVerres + 1)}>
-                    <Image src={add} alt="logo ajout" width={20} height={20} />
-                  </button>
-                  <p className="pb-2">{nbVerres}</p>
+        <Footer />
+      </div>
+    ) : (
+      <>
+        <Helmet>
+          <title>Care - Suivi eau</title>
+        </Helmet>
+        <NavAccueil />
+        <ToastContainer />
+        <div className="flex md:flex-row flex-col items-center justify-center my-10 bg-slate-100 rounded shadow-lg p-4 w-11/12 md:w-9/12 mx-auto">
+          <Image src={idea} alt="idea" width={50} height={50} />
+          <h1 className="md:ml-20 text-center md:text-left">
+            <span className="md:text-xl font-bold">Le saviez-vous ? </span>
+            <br />
+            {random}
+          </h1>
+        </div>
+        <h2 className="w-11/12 mx-auto text-center my-10 md:text-xl font-bold">
+          Selon votre morphologie et votre age, vous devez boire{' '}
+          <span className="text-blue-500"> {waterToDrink} ml </span> d&apos;eau
+          par jour, soit environ {Math.ceil(waterToDrink / 200)} verres de 20
+          cl.
+        </h2>
+        <WaterTrack water={water} waterToDrink={waterToDrink} />
+        <p className="text-center text-xl my-20">
+          Ici, vous pouvez ajouter votre consommation d&apos;eau au fur et à
+          mesure de la journée.
+        </p>
+        {!waterSelected ? (
+          <div className="flex  items-center justify-center w-11/12 md:justify-around mx-auto md:w-96 mt-10 mb-40">
+            <button type="button" onClick={() => setWaterSelected(true)}>
+              <Image src={add} alt="logo ajout" width={40} height={40} />
+            </button>
+            <h3 className="md:text-xl font-bold ml-5 md:ml-0">
+              Ajouter une consommation d&apos;eau
+            </h3>
+          </div>
+        ) : (
+          <div className="mt-20 mb-40 mx-auto md:w-11/12">
+            {!added && (
+              <>
+                <div className="flex w-9/12 md:w-6/12 justify-between md:justify-between mx-auto">
+                  <p className="mr-10 w-22 font-bold">Date du jour :</p>
+                  <p>{new Date().toLocaleDateString()}</p>
+                </div>
+                <div className="flex flex-col w-9/12 md:w-6/12 justify-between md:justify-between mx-auto mt-5 mb-10 md:mb-0">
+                  <p className="text-center font-bold">
+                    Choisir le nombre de verres consommés (20cl) :
+                  </p>
+                  <div className="flex items-center justify-around w-28 mx-auto mt-10">
+                    <button onClick={() => setNbVerres(nbVerres + 1)}>
+                      <Image
+                        src={add}
+                        alt="logo ajout"
+                        width={20}
+                        height={20}
+                      />
+                    </button>
+                    <p className="pb-2">{nbVerres}</p>
+                    <button
+                      onClick={() => {
+                        if (nbVerres < 0) {
+                          setNbVerres(0);
+                        } else {
+                          setNbVerres(nbVerres - 1);
+                        }
+                      }}
+                    >
+                      <Image
+                        src={moins}
+                        alt="logo moins"
+                        width={20}
+                        height={20}
+                      />
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
+            <div className="flex flex-col items-center justify-center">
+              {!added ? (
+                <>
                   <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5 "
+                    type="button"
                     onClick={() => {
-                      if (nbVerres < 0) {
-                        setNbVerres(0);
-                      } else {
-                        setNbVerres(nbVerres - 1);
-                      }
+                      addWater();
                     }}
                   >
-                    <Image
-                      src={moins}
-                      alt="logo moins"
-                      width={20}
-                      height={20}
-                    />
+                    ajouter
                   </button>
-                </div>
-              </div>
-            </>
-          )}
-          <div className="flex flex-col items-center justify-center">
-            {!added ? (
-              <>
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5 "
-                  type="button"
-                  onClick={() => {
-                    addWater();
-                  }}
-                >
-                  ajouter
-                </button>
-              </>
-            ) : (
-              <h2 className="text-xl text-center font-bold mb-5">
-                Donnée ajoutée, valider pour sauvegarder.
-              </h2>
-            )}
-            {added && (
-              <>
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5"
-                  type="button"
-                  onClick={() => {
-                    updateProfile({ water });
-                    setAdded(false);
-                  }}
-                >
-                  valider
-                </button>
-              </>
-            )}
+                </>
+              ) : (
+                <h2 className="text-xl text-center font-bold mb-5">
+                  Donnée ajoutée, valider pour sauvegarder.
+                </h2>
+              )}
+              {added && (
+                <>
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5"
+                    type="button"
+                    onClick={() => {
+                      updateProfile({ water });
+                      setAdded(false);
+                    }}
+                  >
+                    valider
+                  </button>
+                </>
+              )}
+            </div>
           </div>
-        </div>
-      )}
-      <Footer />
-    </>
+        )}
+        <Footer />
+      </>
+    )
   ) : (
     <NotConnected />
   );
