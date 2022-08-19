@@ -38,17 +38,8 @@ export default function SuiviPoids() {
     });
   }, []);
 
-  const waiting = () => {
-    setTimeout(() => {
-      setWait(false);
-    }, 3000);
-  };
-
   useEffect(() => {
     getProfile();
-    return () => {
-      waiting();
-    };
   }, [session]);
 
   async function getProfile() {
@@ -141,27 +132,25 @@ export default function SuiviPoids() {
 
   return session ? (
     weight.length === 0 && height === null ? (
-      wait && (
-        <div>
-          <NavAccueil />
-          <div className="flex flex-col items-center">
-            <p className="text-2xl w-9/12 mx-auto font-bold text-center mt-10">
-              Rendez vous sur votre profil pour ajouter les données nécessaires
-              au bon fonctionnement de l&apos;application.
-            </p>
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5"
-              type="button"
-              onClick={() => {
-                router.push('/profil');
-              }}
-            >
-              Mon profil
-            </button>
-          </div>
-          <Footer />
+      <div>
+        <NavAccueil />
+        <div className="flex flex-col items-center">
+          <p className="text-2xl w-9/12 mx-auto font-bold text-center mt-10">
+            Rendez vous sur votre profil pour ajouter les données nécessaires au
+            bon fonctionnement de l&apos;application.
+          </p>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5"
+            type="button"
+            onClick={() => {
+              router.push('/profil');
+            }}
+          >
+            Mon profil
+          </button>
         </div>
-      )
+        <Footer />
+      </div>
     ) : (
       <div className="">
         <Helmet>
