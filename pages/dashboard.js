@@ -246,7 +246,7 @@ export default function Dashboard() {
                 ? `${lastNight.nuit.split(':')[0]}h${
                     lastNight.nuit.split(':')[1]
                   }`
-                : '00h00'}
+                : 'pas de données.'}
             </p>
           </div>
         </div>

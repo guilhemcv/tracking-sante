@@ -76,9 +76,9 @@ export default function Account({ session }) {
             : [{ date: new Date().toLocaleDateString(), poids }],
         height,
         water:
-          water === null
-            ? [{ date: new Date().toLocaleDateString(), values: [0] }]
-            : water,
+          water !== null
+            ? water
+            : [{ date: new Date().toLocaleDateString(), values: [0] }],
         updated_at: new Date(),
         age,
         sexe,
