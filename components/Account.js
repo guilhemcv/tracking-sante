@@ -219,7 +219,7 @@ export default function Account({ session }) {
         </div>
         <div className="flex w-full flex-col my-5">
           <label className="block  font-bold  text-gray-700 mb-2" htmlFor="age">
-            Évaluez votre activité journalière
+            Évaluez votre activité journalière :
           </label>
           <select
             className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-l border-gray-300 rounded-md"
@@ -242,7 +242,7 @@ export default function Account({ session }) {
               Très actif (activité très physique. ex: ouvrier)
             </option>
           </select>
-          <p className="block font-bold  text-gray-700 mb-2">
+          <p className="block font-bold  text-gray-700 mb-2 mt-5">
             Vous avez choisi : {activity}
           </p>
         </div>

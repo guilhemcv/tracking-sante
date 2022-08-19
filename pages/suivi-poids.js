@@ -170,7 +170,7 @@ export default function SuiviPoids() {
           <WeightTrack weight={weight} />
           <div className="flex flex-col items-center my-10 lg:mt-0">
             <h2 className="mb-5 text-xl font-bold underline">
-              Moyenne française
+              Moyennes de poids en France :
             </h2>
             <AverageWeight />
           </div>
