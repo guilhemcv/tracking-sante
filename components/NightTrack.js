@@ -13,8 +13,6 @@ import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
 const WaterTrack = ({ night }) => {
-  console.log(night);
-
   useEffect(() => {}, [night]);
 
   const [labels, setLabels] = useState([]);

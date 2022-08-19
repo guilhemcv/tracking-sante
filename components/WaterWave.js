@@ -17,7 +17,6 @@ const WaterWave = ({ water, waterToDrink }) => {
     });
   }, [water]);
   
-  console.log(todayVerres);
 
   return (
     <>

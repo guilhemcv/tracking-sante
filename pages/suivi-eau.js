@@ -214,7 +214,7 @@ export default function SuiviEau() {
                     <p className="pb-2">{nbVerres}</p>
                     <button
                       onClick={() => {
-                        if (nbVerres < 0) {
+                        if (nbVerres <= 0) {
                           setNbVerres(0);
                         } else {
                           setNbVerres(nbVerres - 1);

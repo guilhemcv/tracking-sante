@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NavAccueil from './NavBar';
 import { Footer } from './Footer';
+import { useRouter } from 'next/router';
 
 export default function Account({ session }) {
   const [loading, setLoading] = useState(true);
@@ -16,6 +17,7 @@ export default function Account({ session }) {
   const [age, setAge] = useState(null);
   const [sexe, setSexe] = useState(null);
   const [activity, setActivity] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     getProfile();
@@ -73,7 +75,10 @@ export default function Account({ session }) {
             ? weight
             : [{ date: new Date().toLocaleDateString(), poids }],
         height,
-        water: water === null ? [{ date: new Date().toLocaleDateString(), values: [0] }] : water,
+        water:
+          water === null
+            ? [{ date: new Date().toLocaleDateString(), values: [0] }]
+            : water,
         updated_at: new Date(),
         age,
         sexe,
@@ -90,7 +95,7 @@ export default function Account({ session }) {
     } catch (error) {
       alert(error.message);
     } finally {
-      toast.success('Profil mis à jour !', {
+      toast.success('👍 Profil mis à jour ! redirection vers le dashboard.', {
         position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
@@ -100,6 +105,9 @@ export default function Account({ session }) {
         progress: undefined,
       });
       setLoading(false);
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 5000);
     }
   }
 

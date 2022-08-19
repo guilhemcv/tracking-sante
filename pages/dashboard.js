@@ -32,7 +32,6 @@ export default function Dashboard() {
   const [wait, setWait] = useState(true);
   const router = useRouter();
 
-  console.log(lastName, water, weight);
 
   const newDate = new Date();
   const date = newDate.getDate();
@@ -149,7 +148,6 @@ export default function Dashboard() {
     }
   }, [sexe, weight, height, age, activity]);
 
-  console.log(calories);
 
   return session ? (
     <div>
