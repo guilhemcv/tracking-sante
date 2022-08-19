@@ -98,8 +98,8 @@ const NavAccueil = ({ water, weight, lastname, session }) => {
             <button
               className="bg-orange-500 hover:bg-orange-700 text-sm py-1 px-2 rounded mt-5 mb-5"
               onClick={() => {
-                supabase.auth.signOut();
                 router.push('/');
+                supabase.auth.signOut();
               }}
             >
               Déconnexion
