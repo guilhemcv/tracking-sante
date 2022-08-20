@@ -26,6 +26,9 @@ export default function SuiviEau() {
   const [nbVerres, setNbVerres] = useState(0);
   const router = useRouter();
   const [session, setSession] = useState(null);
+  const action = 'page suivi eau';
+  const data = {};
+  splitbee.track(action, data);
 
   useEffect(() => {
     setSession(supabase.auth.session());

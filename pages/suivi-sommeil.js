@@ -27,6 +27,9 @@ export default function SuiviEau() {
   const [nbVerres, setNbVerres] = useState(0);
   const router = useRouter();
   const [session, setSession] = useState(null);
+  const action = 'page suivi sommeil';
+  const data = {};
+  splitbee.track(action, data);
 
   const date = new Date();
   const yesterday = new Date(

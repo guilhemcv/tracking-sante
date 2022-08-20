@@ -12,6 +12,7 @@ import moon from '../public/assets/images/moon.png';
 import imgCalories from '../public/assets/images/calories.png';
 import { Helmet } from 'react-helmet';
 import { NotConnected } from '../components/NotConnected';
+import splitbee from '@splitbee/web';
 
 export default function Dashboard() {
   const [session, setSession] = useState(null);
@@ -31,6 +32,9 @@ export default function Dashboard() {
   const [lastNight, setLastNight] = useState(null);
   const [wait, setWait] = useState(true);
   const router = useRouter();
+  const action = 'page dashboard';
+  const data = {};
+  splitbee.track(action, data);
 
 
   const newDate = new Date();
