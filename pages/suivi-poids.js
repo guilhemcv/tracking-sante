@@ -29,9 +29,6 @@ export default function SuiviPoids() {
   const [session, setSession] = useState(null);
   const [wait, setWait] = useState(true);
   const router = useRouter();
-  const action = 'page suivi poids';
-  const data = {};
-  splitbee.track(action, data);
 
   useEffect(() => {
     setSession(supabase.auth.session());

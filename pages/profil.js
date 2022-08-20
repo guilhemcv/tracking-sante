@@ -8,10 +8,7 @@ import { NotConnected } from '../components/NotConnected';
 
 export default function Profil() {
   const [session, setSession] = useState(null);
-  const router = useRouter();
-  const action = 'page profil';
-  const data = {};
-  splitbee.track(action, data);
+
 
   useEffect(() => {
     setSession(supabase.auth.session());

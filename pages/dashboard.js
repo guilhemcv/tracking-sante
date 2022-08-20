@@ -13,6 +13,7 @@ import imgCalories from '../public/assets/images/calories.png';
 import { Helmet } from 'react-helmet';
 import { NotConnected } from '../components/NotConnected';
 import splitbee from '@splitbee/web';
+import Head from 'next/head';
 
 export default function Dashboard() {
   const [session, setSession] = useState(null);
@@ -32,9 +33,7 @@ export default function Dashboard() {
   const [lastNight, setLastNight] = useState(null);
   const [wait, setWait] = useState(true);
   const router = useRouter();
-  const action = 'page dashboard';
-  const data = {};
-  splitbee.track(action, data);
+
 
 
   const newDate = new Date();
@@ -156,7 +155,11 @@ export default function Dashboard() {
   return session ? (
     <div>
       <Helmet>
+      <Head>
         <title>Care - Dashboard</title>
+        <script async src="https://cdn.splitbee.io/sb.js"></script>
+
+        </Head>
       </Helmet>
       <NavAccueil />
 

@@ -9,15 +9,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Helmet } from 'react-helmet';
 import { Cookie } from '../components/Cookie';
-import splitbee from '@splitbee/web';
+import Head from 'next/head';
 
 export default function Home() {
   const [session, setSession] = useState(null);
   const [wait, setWait] = useState(false);
   const router = useRouter();
-  const action = 'page index';
-  const data = {};
-  splitbee.track(action, data);
 
   const show = () => {
     setTimeout(() => {
@@ -51,13 +48,15 @@ export default function Home() {
   return (
     <div className="h-screen bg-center bg-[url('/assets/images/running-woman.jpg')]">
       <Helmet>
-        <meta charSet="utf-8" />
-        <title>Bienvenue sur Care</title>
-        <script async src="https://cdn.splitbee.io/sb.js"></script>
-        <meta
-          name="description"
-          content="Care - l'application qui prend soin de vous ! va vous permettre de suivre vos données importantes comme le poids, la consommation d'eau, le suivi du sommeil,..."
-        />
+        <Head>
+          <meta charSet="utf-8" />
+          <title>Bienvenue sur Care</title>
+          <script async src="https://cdn.splitbee.io/sb.js"></script>
+          <meta
+            name="description"
+            content="Care - l'application qui prend soin de vous ! va vous permettre de suivre vos données importantes comme le poids, la consommation d'eau, le suivi du sommeil,..."
+          />
+        </Head>
       </Helmet>
       <NavLanding />
       <Landing displayToast={displayToast} />
