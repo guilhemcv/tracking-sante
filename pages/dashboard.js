@@ -153,13 +153,13 @@ export default function Dashboard() {
 
 
   return session ? (
+    <>
+    <Head>   
+    <script async src="https://cdn.splitbee.io/sb.js"></script>
+    </Head>
     <div>
       <Helmet>
-      <Head>
         <title>Care - Dashboard</title>
-        <script async src="https://cdn.splitbee.io/sb.js"></script>
-
-        </Head>
       </Helmet>
       <NavAccueil />
 
@@ -279,6 +279,7 @@ export default function Dashboard() {
 
       <Footer />
     </div>
+    </>
   ) : (
     <NotConnected />
   );
